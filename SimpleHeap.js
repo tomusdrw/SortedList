@@ -65,16 +65,24 @@ var SimpleHeap = (function() {
             return max[0] || null;
         },
         /**
-         * Return size
+         * Return current size of structure
          * 
-         * @returns
+         * @returns {Integer} size of heap
          */
         size : function simpleHeapSize() {
             return this._order.length;
         },
+        /**
+         * Returs true if this heap is empty (size is 0)
+         * 
+         * @returns {Boolean}
+         */
         isEmpty : function simpleHeapIsEmpty() {
             return this._order.length === 0;
         },
+        /**
+         * Clears content of heap.
+         */
         clear : function simpleHeapClear() {
             this._order = [];
         },
@@ -110,6 +118,12 @@ var SimpleHeap = (function() {
                 };
             }
         },
+        /**
+         * Adds all elements (values) from iterable (array or object)
+         * 
+         * @param {Object}
+         *            iterable
+         */
         pushAll : function simpleHeapPushAll(iterable) {
             iterable || this._checkEmpty(iterable);
             if (iterable.forEach) {
@@ -122,16 +136,33 @@ var SimpleHeap = (function() {
                 }
             }
         },
+        /**
+         * Adds single element to heap.
+         * 
+         * @param key
+         */
         push : function simpleHeapPush(key) {
             key || this._checkEmpty(key);
             var pos = this._findPos(key);
             this._order.splice(pos, 0, key);
         },
+        /**
+         * Checks if key exists in heap.
+         * 
+         * @param key
+         * @returns {Boolean}
+         */
         contains : function simpleHeapContains(key) {
             key || this._checkEmpty(key);
             var pos = this._findPos(key);
             return this._order[pos] === key;
         },
+        /**
+         * Removes element from heap.
+         * 
+         * @param key
+         * @returns {Boolean} true if element was removed, false otherwise
+         */
         remove : function simpleHeapRemove(key) {
             key || this._checkEmpty(key);
             var pos = this._findPos(key);
@@ -141,6 +172,11 @@ var SimpleHeap = (function() {
             }
             return false;
         },
+        /**
+         * Returns array of elements in heap.
+         * 
+         * @returns
+         */
         getArray : function simpleHeapGetArray() {
             return this._order.slice(0);
         }
