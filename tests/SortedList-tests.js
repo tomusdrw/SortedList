@@ -1,9 +1,9 @@
-QUnit.specify("eu.blacksoft.js.heap", function() {
+QUnit.specify("eu.blacksoft.js.sortedlist", function() {
 
     describe("With default comparator", function() {
         var cut = null;
         before(function() {
-            cut = SimpleHeap.create();
+            cut = SortedList.create();
         });
 
         describe("intial state", function() {

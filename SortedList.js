@@ -1,6 +1,6 @@
-var SimpleHeap = (function() {
+var SortedList = (function() {
     'use strict';
-    var SimpleHeap = function simpleHeap(comparator) {
+    var SortedList = function sortedList(comparator) {
         this._order = [];
         this._map = {};
         if (comparator) {
@@ -8,19 +8,19 @@ var SimpleHeap = (function() {
         }
     };
     /**
-     * Create empty heap.
+     * Create empty heap. O(1)
      * 
      * @param comparator
      *            (optional)
-     * @returns {SimpleHeap}
+     * @returns {sortedList}
      */
-    SimpleHeap.create = function simpleHeapCreate(comparator) {
-        return new SimpleHeap(comparator);
+    SortedList.create = function sortedListCreate(comparator) {
+        return new SortedList(comparator);
     };
-    SimpleHeap.prototype = {
+    SortedList.prototype = {
         _order : null,
         _map : null,
-        _cmp : function simpleHeapCmp(a, b) {
+        _cmp : function sortedListCmp(a, b) {
             if (a < b) {
                 return -1;
             } else if (a > b) {
@@ -29,64 +29,64 @@ var SimpleHeap = (function() {
             return 0;
         },
         /**
-         * Returns minimal value (does not remove from heap)
+         * Returns minimal value (does not remove from list) O(1)
          * 
          * @returns minimal value or null
          */
-        peekMin : function simpleHeapPeekMin() {
+        peekMin : function sortedListPeekMin() {
             return this._order[0] || null;
         },
         /**
-         * Returns minimal value and deletes it from heap.
+         * Returns minimal value and deletes it from list. O(splice)
          * 
          * @returns minimal value or null if empty
          */
-        popMin : function simpleHeapPopMin() {
+        popMin : function sortedListPopMin() {
             var min = this._order.splice(0, 1);
             return min[0] || null;
         },
         /**
-         * Returns maximal value without removing from structure.
+         * Returns maximal value without removing from list. O(1)
          * 
          * @returns maximal value or null if empty
          */
-        peekMax : function simpleHeapPeekMax() {
+        peekMax : function sortedListPeekMax() {
             var o = this._order;
             return o[o.length - 1] || null;
         },
         /**
-         * Returns maximal value and removes it from
+         * Returns maximal value and removes it from O(splice)
          * 
          * @returns maximal value or null if empty
          */
-        popMax : function simpleHeapPopMax() {
+        popMax : function sortedListPopMax() {
             var o = this._order;
             var max = o.splice(o.length - 1, 1);
             return max[0] || null;
         },
         /**
-         * Return current size of structure
+         * Return current size of structure O(1)
          * 
          * @returns {Integer} size of heap
          */
-        size : function simpleHeapSize() {
+        size : function sortedListSize() {
             return this._order.length;
         },
         /**
-         * Returs true if this heap is empty (size is 0)
+         * Returs true if this heap is empty (size is 0) O(1)
          * 
          * @returns {Boolean}
          */
-        isEmpty : function simpleHeapIsEmpty() {
+        isEmpty : function sortedListIsEmpty() {
             return this._order.length === 0;
         },
         /**
-         * Clears content of heap.
+         * Clears content of list. O(1)
          */
-        clear : function simpleHeapClear() {
+        clear : function sortedListClear() {
             this._order = [];
         },
-        _findPos : function simpleHeapFindPos(key) {
+        _findPos : function sortedListFindPos(key) {
             // shortcuts
             var o = this._order, f = Math.floor, cmp = this._cmp;
             // vars
@@ -110,8 +110,8 @@ var SimpleHeap = (function() {
             }
             return i;
         },
-        _checkEmpty : function simpleHeapCheckNotEmpty(key) {
-            if (key == undefined) {
+        _checkEmpty : function sortedListCheckNotEmpty(key) {
+            if (key == null) {
                 throw {
                     name : "Empty key",
                     message : "Given key is null or undefined."
@@ -120,11 +120,12 @@ var SimpleHeap = (function() {
         },
         /**
          * Adds all elements (values) from iterable (array or object)
+         * O(k*(log(n) +splice))
          * 
          * @param {Object}
          *            iterable
          */
-        pushAll : function simpleHeapPushAll(iterable) {
+        pushAll : function sortedListPushAll(iterable) {
             iterable || this._checkEmpty(iterable);
             if (iterable.forEach) {
                 iterable.forEach(this.push.bind(this));
@@ -137,33 +138,33 @@ var SimpleHeap = (function() {
             }
         },
         /**
-         * Adds single element to heap.
+         * Adds single element to list. O(log(n) + splice)
          * 
          * @param key
          */
-        push : function simpleHeapPush(key) {
+        push : function sortedListPush(key) {
             key || this._checkEmpty(key);
             var pos = this._findPos(key);
             this._order.splice(pos, 0, key);
         },
         /**
-         * Checks if key exists in heap.
+         * Checks if key exists in list. O(log(n))
          * 
          * @param key
          * @returns {Boolean}
          */
-        contains : function simpleHeapContains(key) {
+        contains : function sortedListContains(key) {
             key || this._checkEmpty(key);
             var pos = this._findPos(key);
             return this._order[pos] === key;
         },
         /**
-         * Removes element from heap.
+         * Removes element from list. O(log(n) + splice)
          * 
          * @param key
          * @returns {Boolean} true if element was removed, false otherwise
          */
-        remove : function simpleHeapRemove(key) {
+        remove : function sortedListRemove(key) {
             key || this._checkEmpty(key);
             var pos = this._findPos(key);
             if (this._order[pos] === key) {
@@ -173,14 +174,14 @@ var SimpleHeap = (function() {
             return false;
         },
         /**
-         * Returns array of elements in heap.
+         * Returns array of elements in list. O(slice)
          * 
          * @returns
          */
-        getArray : function simpleHeapGetArray() {
+        getArray : function sortedListGetArray() {
             return this._order.slice(0);
         }
     };
 
-    return SimpleHeap;
+    return SortedList;
 }());
