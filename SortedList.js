@@ -42,8 +42,7 @@ var SortedList = (function() {
          * @returns minimal value or null if empty
          */
         popMin : function sortedListPopMin() {
-            var min = this._order.splice(0, 1);
-            return min[0] || null;
+            return this._order.shift() || null;
         },
         /**
          * Returns maximal value without removing from list. O(1)
@@ -60,9 +59,7 @@ var SortedList = (function() {
          * @returns maximal value or null if empty
          */
         popMax : function sortedListPopMax() {
-            var o = this._order;
-            var max = o.splice(o.length - 1, 1);
-            return max[0] || null;
+            return this._order.pop() || null;
         },
         /**
          * Return current size of structure O(1)
